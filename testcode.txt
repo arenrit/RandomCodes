@@ -1,11 +1,21 @@
-proc datasets lib=test mt=data;
-  modify emblem_freq_dam_final_1;
-     attrib _all_ label=' ';
-     attrib _all_ format=;
-run;
+%let AccQtr = AYrQtr in
+        (
+        '2012Q1','2012Q2','2012Q3','2012Q4',
+           '2013Q1','2013Q2','2013Q3','2013Q4',
+           '2014Q1','2014Q2','2014Q3','2014Q4',
+        '2015Q1','2015Q2','2015Q3','2015Q4');
 
-
-data emblem_freq_dam_final_1;
+data 
+  emblem_freq_dam_final_1(drop = rn)
+  emblem_freq_dam_final_2(drop = rn)
+  emblem_freq_dam_final_3(drop = rn)
+  emblem_freq_dam_final_4(drop = rn)
+  emblem_freq_dam_final_5(drop = rn)
+  emblem_freq_dam_final_6(drop = rn)
+  emblem_freq_dam_final_7(drop = rn)
+  emblem_freq_dam_final_8(drop = rn)
+  emblem_freq_dam_final_9(drop = rn)
+  emblem_freq_dam_final_0(drop = rn);
   set test.emblem_freq_dam_final_1(keep = 
 AYrQtr
 RandNum
@@ -377,11 +387,31 @@ Factor1
 Factor2
 Factor3
 Factor4
-Factor5);
+Factor5 
+where=(&AccQtr. and Master_Group not in ('G1936') 
+and MainDr_Age ne . and ind1day = 0 and VehicleRacerIndexABI ^= 4 
+and Voluntary_Excess < 500 and Annual_Mileage <= 20000 and Vehicle_Value <= 50000 and 
+NumCCJs < 1 and ID_APPL_GC in ('I1') and vehicle_brand not in ('PORSCHE')));
+  rn = ranuni(17051987);
+       if rn <= then output emblem_freq_dam_final_1;
+  else if rn <= then output emblem_freq_dam_final_2;
+  else if rn <= then output emblem_freq_dam_final_3;
+  else if rn <= then output emblem_freq_dam_final_4;
+  else if rn <= then output emblem_freq_dam_final_5;
+  else if rn <= then output emblem_freq_dam_final_6;
+  else if rn <= then output emblem_freq_dam_final_7;
+  else if rn <= then output emblem_freq_dam_final_8;
+  else if rn <= then output emblem_freq_dam_final_9;
+  else               output emblem_freq_dam_final_0;
 run;
 
-proc export data = emblem_freq_dam_final_1
-  outfile = ""
-  dbms=csv
-  replace;
-run;
+proc export data = emblem_freq_dam_final_1 outfile = "D:\work\01. Motor Risk Pricing\WS\WS1.csv" dbms=csv replace; run;
+proc export data = emblem_freq_dam_final_2 outfile = "D:\work\01. Motor Risk Pricing\WS\WS2.csv" dbms=csv replace; run;
+proc export data = emblem_freq_dam_final_3 outfile = "D:\work\01. Motor Risk Pricing\WS\WS3.csv" dbms=csv replace; run;
+proc export data = emblem_freq_dam_final_4 outfile = "D:\work\01. Motor Risk Pricing\WS\WS4.csv" dbms=csv replace; run;
+proc export data = emblem_freq_dam_final_5 outfile = "D:\work\01. Motor Risk Pricing\WS\WS5.csv" dbms=csv replace; run;
+proc export data = emblem_freq_dam_final_6 outfile = "D:\work\01. Motor Risk Pricing\WS\WS6.csv" dbms=csv replace; run;
+proc export data = emblem_freq_dam_final_7 outfile = "D:\work\01. Motor Risk Pricing\WS\WS7.csv" dbms=csv replace; run;
+proc export data = emblem_freq_dam_final_8 outfile = "D:\work\01. Motor Risk Pricing\WS\WS8.csv" dbms=csv replace; run;
+proc export data = emblem_freq_dam_final_9 outfile = "D:\work\01. Motor Risk Pricing\WS\WS9.csv" dbms=csv replace; run;
+proc export data = emblem_freq_dam_final_0 outfile = "D:\work\01. Motor Risk Pricing\WS\WS0.csv" dbms=csv replace; run;
